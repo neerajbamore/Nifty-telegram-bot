@@ -227,3 +227,28 @@ def send_message(text):
 # Deploy hone ke turant baad test message bhejna
 if __name__ == "__main__":
     send_message("🚀 Bot test successful! Ye message Render se aaya hai ✅")
+import os
+import requests
+from flask import Flask
+
+app = Flask(__name__)
+
+# Environment se values lena (Render ke Environment Variables me set kiya hua)
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+CHAT_ID = os.getenv("CHAT_ID")
+
+def send_message(text):
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+    data = {"chat_id": CHAT_ID, "text": text}
+    response = requests.post(url, data=data)
+    print("Telegram response:", response.json())
+
+# ✅ Deploy hote hi ek test message bhej dega
+send_message("🚀 Bot test from Render successful! ✅")
+
+@app.route("/")
+def home():
+    return "Bot is running and connected to Telegram ✅"
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=10000)
