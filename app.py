@@ -209,3 +209,21 @@ if __name__ == "__main__":
     t = threading.Thread(target=background_loop, daemon=True)
     t.start()
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))
+# =====================
+# Test Message Section
+# =====================
+
+import os, requests
+
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+CHAT_ID = os.getenv("CHAT_ID")
+
+def send_message(text):
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+    data = {"chat_id": CHAT_ID, "text": text}
+    response = requests.post(url, data=data)
+    print(response.json())
+
+# Deploy hone ke turant baad test message bhejna
+if __name__ == "__main__":
+    send_message("🚀 Bot test successful! Ye message Render se aaya hai ✅")
